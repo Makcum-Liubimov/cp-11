@@ -12,70 +12,87 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+
 
 namespace cp_11
 {
     public partial class MainWindow : Window
     {
-        private Scedule_Nod[] schedule;
-        private List<Scedule_Nod> userTickets;
+        public List<ScheduleNode> ScheduleNodes { get; set; } = new List<ScheduleNode>();
 
         public MainWindow()
         {
             InitializeComponent();
-            userTickets = new List<Scedule_Nod>();
-            LoadSchedule();
+            LoadCities();
+            SetDefaultDate();
+            LoadScheduleData("E:\\maxes_stuff\\GX_DW\\cp-scdl - list1.csv");
         }
-
-        private void LoadSchedule()
+        private void SetDefaultDate()
         {
-            schedule = new Scedule_Nod[]
-            {
-                new Scedule_Nod { IsTrainAvailableToday = true, NumberOfTrain = 1, Destination = "Kyiv" },
-                new Scedule_Nod { IsTrainAvailableToday = false, NumberOfTrain = 2, Destination = "Lviv" },
-                new Scedule_Nod { IsTrainAvailableToday = true, NumberOfTrain = 3, Destination = "Odessa" }
-            };
+            DepartureDatePicker.SelectedDate = DateTime.Today;
         }
-
-        private void ShowScheduleButton_Click(object sender, RoutedEventArgs e)
+        private void LoadCities()
         {
-            ScheduleListBox.Items.Clear();
-            for (int i = 0; i < schedule.Length; i++)
+            FromCityComboBox.Items.Add("Київ");
+            FromCityComboBox.Items.Add("Львів");
+            FromCityComboBox.Items.Add("Одеса");
+            // Додайте інші міста
+        }
+        private void LoadScheduleData(string filePath)
+        {
+            try
             {
-                var node = schedule[i];
-                ScheduleListBox.Items.Add($"Елемент {i + 1}: Потяг №{node.NumberOfTrain}, Пункт призначення: {node.Destination}, Доступний сьогодні: {node.IsTrainAvailableToday}");
+                var lines = File.ReadAllLines(filePath);
+
+                foreach (var line in lines.Skip(1)) // Пропускаємо заголовок
+                {
+                    var values = line.Split(',');
+
+                    var scheduleNode = new ScheduleNode
+                    {
+                        FromCity = values[0],
+                        ToCity = values[1],
+                        DepartureDate = DateTime.Parse(values[2]),
+                        DepartureTime = TimeSpan.Parse(values[3]),
+                        TrainNumber = values[4]
+                    };
+
+                    ScheduleNodes.Add(scheduleNode);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка при завантаженні даних: {ex.Message}");
             }
         }
 
-        private void BuyTicketButton_Click(object sender, RoutedEventArgs e)
+        private void ShowTicketsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ScheduleListBox.SelectedItem != null)
+            if (FromCityComboBox.SelectedItem != null)
             {
-                int selectedIndex = ScheduleListBox.SelectedIndex;
-                if (schedule[selectedIndex].IsTrainAvailableToday)
-                {
-                    userTickets.Add(schedule[selectedIndex]);
-                    MessageBox.Show("Квиток придбано!");
-                    MyTicketsButton.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    MessageBox.Show("Потяг сьогодні недоступний.");
-                }
+                string selectedCity = FromCityComboBox.SelectedItem.ToString();
+                DisplayTickets(selectedCity);
             }
             else
             {
-                MessageBox.Show("Будь ласка, оберіть потяг з розкладу.");
+                MessageBox.Show("Будь ласка, оберіть місто.");
             }
         }
 
-        private void MyTicketsButton_Click(object sender, RoutedEventArgs e)
+        private void DisplayTickets(string city)
         {
-            TicketsListBox.Items.Clear();
-            foreach (var ticket in userTickets)
-            {
-                TicketsListBox.Items.Add($"Потяг №{ticket.NumberOfTrain}, Пункт призначення: {ticket.Destination}");
-            }
+            var tickets = ScheduleNodes.Where(s => s.FromCity == city).ToList();
+            TicketsListBox.ItemsSource = tickets;
         }
+    }
+
+    public class ScheduleNode
+    {
+        public string FromCity { get; set; }
+        public string ToCity { get; set; }
+        public DateTime DepartureDate { get; set; }
+        public TimeSpan DepartureTime { get; set; }
+        public string TrainNumber { get; set; }
     }
 }
