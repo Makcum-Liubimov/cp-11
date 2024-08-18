@@ -30,14 +30,16 @@ namespace cp_11
         }
         private void SetDefaultDate()
         {
-            DepartureDatePicker.SelectedDate = DateTime.Today;
+            //DepartureDatePicker.SelectedDate = DateTime.Today;
         }
         private void LoadCities()
         {
             FromCityComboBox.Items.Add("Київ");
-            FromCityComboBox.Items.Add("Львів");
-            FromCityComboBox.Items.Add("Одеса");
-            // Додайте інші міста
+            //FromCityComboBox.Items.Add("Львів");
+            //FromCityComboBox.Items.Add("Одеса");
+            ToCityComboBox.Items.Add("Харків");
+            ToCityComboBox.Items.Add("Чернігів");
+          
         }
         private void LoadScheduleData(string filePath)
         {
@@ -49,16 +51,26 @@ namespace cp_11
                 {
                     var values = line.Split(',');
 
-                    var scheduleNode = new ScheduleNode
-                    {
-                        FromCity = values[0],
-                        ToCity = values[1],
-                        DepartureDate = DateTime.Parse(values[2]),
-                        DepartureTime = TimeSpan.Parse(values[3]),
-                        TrainNumber = values[4]
-                    };
 
-                    ScheduleNodes.Add(scheduleNode);
+                    // Додаємо у поля "Звідки" і "Куди"
+                    if (!FromCityComboBox.Items.Contains(values[0]))
+                    {
+                        FromCityComboBox.Items.Add(values[0]);
+                    }
+
+                    if (!ToCityComboBox.Items.Contains(values[1]))
+                    {
+                        ToCityComboBox.Items.Add(values[1]);
+                    }
+                    // Додаємо дати у відповідний список
+                    if (!DepartureDateComboBox.Items.Contains(values[3]))
+                    {
+                        DepartureDateComboBox.Items.Add(values[3]);
+                    }
+                    // Додаємо час у відповідний список
+                    DepartureTimeComboBox.Items.Add(values[2]);
+
+                    //ScheduleNodes.Add(scheduleNode);
                 }
             }
             catch (Exception ex)

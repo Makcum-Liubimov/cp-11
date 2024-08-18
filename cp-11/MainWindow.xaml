@@ -10,24 +10,14 @@
         <ComboBox Name="ToCityComboBox" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="400,30,0,0" Width="300"/>
 
         <!-- Дата відправлення -->
-        <TextBlock Text="Дата відправлення" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,80,0,0"/>
-        <DatePicker Name="DepartureDatePicker" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,100,0,0" Width="300" />
+        <ComboBox Name="DepartureDateComboBox" Width="150" Margin="28,77,602,35"/>
 
         <!-- Час відправлення -->
-        <TextBlock Text="Час відправлення від" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="400,80,0,0"/>
-        <ComboBox Name="TimePicker" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="400,100,0,0" Width="100">
-            <ComboBoxItem Content="00:00"/>
-            <ComboBoxItem Content="06:00"/>
-            <ComboBoxItem Content="12:00"/>
-            <ComboBoxItem Content="18:00"/>
-        </ComboBox>
+        <ComboBox Name="DepartureTimeComboBox" Margin="413,77,252,35"/>
+
 
         <!-- Кнопки для вибору дати -->
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,150,0,0">
-            <Button Content="Сьогодні" Width="75" Margin="5"/>
-            <Button Content="Завтра" Width="75" Margin="5"/>
-            <Button Content="Післязавтра" Width="75" Margin="5"/>
-        </StackPanel>
+        
         <ListBox Name="TicketsListBox" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,250,0,0" Width="600" Height="150">
             <ListBox.ItemTemplate>
                 <DataTemplate>
