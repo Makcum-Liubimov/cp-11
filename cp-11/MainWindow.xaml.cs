@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Globalization;
 
 
 namespace cp_11
@@ -24,79 +25,79 @@ namespace cp_11
         public MainWindow()
         {
             InitializeComponent();
-            LoadCities();
-            SetDefaultDate();
-            LoadScheduleData("E:\\maxes_stuff\\GX_DW\\cp-scdl - list1.csv");
+            //LoadCities();
+            //SetDefaultDate();
+            //LoadScheduleData(@"Resources\cp-scdl - list1.csv");
         }
-        private void SetDefaultDate()
-        {
-            //DepartureDatePicker.SelectedDate = DateTime.Today;
-        }
-        private void LoadCities()
-        {
-            FromCityComboBox.Items.Add("Київ");
-            //FromCityComboBox.Items.Add("Львів");
-            //FromCityComboBox.Items.Add("Одеса");
-            ToCityComboBox.Items.Add("Харків");
-            ToCityComboBox.Items.Add("Чернігів");
+        //private void SetDefaultDate()
+        //{
+        //    //DepartureDatePicker.SelectedDate = DateTime.Today;
+        //}
+        //private void LoadCities()
+        //{
+        //    FromCityComboBox.Items.Add("Київ");
+        //    //FromCityComboBox.Items.Add("Львів");
+        //    //FromCityComboBox.Items.Add("Одеса");
+        //    ToCityComboBox.Items.Add("Харків");
+        //    ToCityComboBox.Items.Add("Чернігів");
           
-        }
-        private void LoadScheduleData(string filePath)
-        {
-            try
-            {
-                var lines = File.ReadAllLines(filePath);
+        //}
+        //private void LoadScheduleData(string filePath)
+        //{
+        //    try
+        //    {
+        //        var lines = File.ReadAllLines(filePath);
+        //        string[] dateFormats = { "MM/dd/yyyy", "dd/MM/yyyy", "yyyy-MM-dd" };
+        //        foreach (var line in lines.Skip(1)) // Пропускаємо заголовок
+        //        {
+        //            var values = line.Split(',');
 
-                foreach (var line in lines.Skip(1)) // Пропускаємо заголовок
-                {
-                    var values = line.Split(',');
 
+        //            // Додаємо у поля "Звідки" і "Куди"
+        //            if (!FromCityComboBox.Items.Contains(values[0]))
+        //            {
+        //                FromCityComboBox.Items.Add(values[0]);
+        //            }
 
-                    // Додаємо у поля "Звідки" і "Куди"
-                    if (!FromCityComboBox.Items.Contains(values[0]))
-                    {
-                        FromCityComboBox.Items.Add(values[0]);
-                    }
+        //            if (!ToCityComboBox.Items.Contains(values[1]))
+        //            {
+        //                ToCityComboBox.Items.Add(values[1]);
+        //            }
+        //            // Додаємо дати у відповідний список
+        //            if (!DepartureDateComboBox.Items.Contains(values[3]))
+        //            {
+        //                DepartureDateComboBox.Items.Add(values[3]);
+        //            }
+        //            // Додаємо час у відповідний список
+        //            DepartureTimeComboBox.Items.Add(values[2]);
 
-                    if (!ToCityComboBox.Items.Contains(values[1]))
-                    {
-                        ToCityComboBox.Items.Add(values[1]);
-                    }
-                    // Додаємо дати у відповідний список
-                    if (!DepartureDateComboBox.Items.Contains(values[3]))
-                    {
-                        DepartureDateComboBox.Items.Add(values[3]);
-                    }
-                    // Додаємо час у відповідний список
-                    DepartureTimeComboBox.Items.Add(values[2]);
+        //            //ScheduleNodes.Add(scheduleNode);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Помилка при завантаженні даних: {ex.Message}");
+        //    }
+        //}
 
-                    //ScheduleNodes.Add(scheduleNode);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Помилка при завантаженні даних: {ex.Message}");
-            }
-        }
+        //private void ShowTicketsButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (FromCityComboBox.SelectedItem != null)
+        //    {
+        //        string selectedCity = FromCityComboBox.SelectedItem.ToString();
+        //        DisplayTickets(selectedCity);
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Будь ласка, оберіть місто.");
+        //    }
+        //}
 
-        private void ShowTicketsButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (FromCityComboBox.SelectedItem != null)
-            {
-                string selectedCity = FromCityComboBox.SelectedItem.ToString();
-                DisplayTickets(selectedCity);
-            }
-            else
-            {
-                MessageBox.Show("Будь ласка, оберіть місто.");
-            }
-        }
-
-        private void DisplayTickets(string city)
-        {
-            var tickets = ScheduleNodes.Where(s => s.FromCity == city).ToList();
-            TicketsListBox.ItemsSource = tickets;
-        }
+        //private void DisplayTickets(string city)
+        //{
+        //    var tickets = ScheduleNodes.Where(s => s.FromCity == city).ToList();
+        //    TicketsListBox.ItemsSource = tickets;
+        //}
     }
 
     public class ScheduleNode
