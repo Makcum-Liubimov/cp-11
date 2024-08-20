@@ -19,96 +19,82 @@ namespace cp_11.View
 {
     public partial class LoginWindow : Window
     {
+        private LoginViewModel _viewModel;
+
         public LoginWindow()
         {
             InitializeComponent();
+            _viewModel = (LoginViewModel)DataContext;
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-
-            //проверку на то что пароль и юзернейм не пустие
-
-
-            //залишаємо Click бо Password не можно  Binding
-            if (DataContext is LoginViewModel loginViewModel)
-            {
-                if (loginViewModel.CheckUser(UsernameTextBox.Text, PasswordBox.Password))
-                {
-                    DialogResult = true;
-                    Close();
-                }
-                else
-                {
-                    //написать месседжбокс "неправильний пароль или юзернейм"
-                }
-            }
-
-
-
-
-            /*string username = UsernameTextBox.Text;
+            string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
-            string userType = (UserTypeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
 
-            if (UserStore.IsValidUser(username, password))
+            if (_viewModel.CheckUser(username, password))
             {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Неправильне ім'я користувача або пароль.");
-            }*/
-        }
-
-        private void CreateUser_OnClick(object sender, RoutedEventArgs e)
-        {
-            //залишаємо Click бо Password не можно  Binding
-            if (DataContext is LoginViewModel loginViewModel)
-            {
-                if (loginViewModel.CreateUser(UsernameTextBox.Text, PasswordBox.Password))
+                MessageBox.Show($"Ви увійшли як {username}");
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    DialogResult = true;
-                    Close();
-                }
+                    var loginWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive);
+                    loginWindow?.Close();
+
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                });
             }
         }
 
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
-            //проверка всех 4ех полей на пустоту
+            NameLabel.Visibility = Visibility.Visible;
+            NameTextBox.Visibility = Visibility.Visible;
+            SurnameLabel.Visibility = Visibility.Visible;
+            SurnameTextBox.Visibility = Visibility.Visible;
 
+            string username = UsernameTextBox.Text;
+            string password = PasswordBox.Password;
+            string name = NameTextBox.Text;
+            string surname = SurnameTextBox.Text;
 
-            // If Name and Surname fields are hidden, show them
-            if (NameTextBox.Visibility == Visibility.Collapsed && SurnameTextBox.Visibility == Visibility.Collapsed)
+            if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(surname))
             {
-                NameLabel.Visibility = Visibility.Visible;
-                NameTextBox.Visibility = Visibility.Visible;
-                SurnameLabel.Visibility = Visibility.Visible;
-                SurnameTextBox.Visibility = Visibility.Visible;
-                SignInButton.Content = "Sign Up";
+               // public bool CreateUser(string login, string password)
+                //{
+                   // bool result = false;
+                    //if (_authentification.CheckUser(login, password))
+                       // MessageBox.Show("Користувача існує");
+                    //else
+                    //{
+                       // if (_authentification.RegisterUser(login, password, "qwerty", "qwerty"))
+                        //{
+                           // MessageBox.Show($"Користувача {login} створено");
+
+                            // Close the current window and redirect to the LoginWindow
+                          //  Application.Current.Dispatcher.Invoke(() =>
+                            //{
+                              //  var signUpWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive);
+                                //signUpWindow?.Close();
+
+                                //LoginWindow loginWindow = new LoginWindow();
+                                //loginWindow.Show();
+                            //});
+
+                            //result = true;
+                        //}
+                        //else
+                        //{
+                          //  MessageBox.Show("Помилка створення користувача");
+                        //}
+                    //}
+
+                   //eturn result;
+                //
             }
             else
             {
-
-
-                // Sign up logic here
-                if (DataContext is LoginViewModel loginViewModel)
-                {
-                    if (loginViewModel.CreateUser(UsernameTextBox.Text, PasswordBox.Password))
-                    {
-                        DialogResult = true;
-                        Close();
-                    }
-                    else
-                    {
-
-                        //меседжбок "користувач вже існує"
-
-                    }
-                }
+                MessageBox.Show("Будь ласка, введіть ім'я та прізвище для реєстрації.");
             }
         }
     }
