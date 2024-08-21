@@ -5,16 +5,21 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows;
 using cp_11.Logic.Auth;
 using cp_11.Logic.model;
 using cp_11.View;
 using cp_11.ViewModel.Base;
 using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace cp_11.ViewModel
 {
     public class MainViewModel : BindableBase
     {
+        private Visibility _seatTypeVisibility;
+        private Visibility _buyButtonVisibility;
         public RelayCommand OpenLoginWindowCommand { get; }
 
         private void OpenLoginWindow(object obj)
@@ -47,8 +52,15 @@ namespace cp_11.ViewModel
             get => currentUser;
             set => Set(ref currentUser, value);
         }
+
+        public ICommand BuyTicketCommand { get; }
+
         public MainViewModel()
         {
+            // Set initial visibility to Visible
+            SeatTypeVisibility = Visibility.Visible;
+            BuyButtonVisibility = Visibility.Visible;
+            BuyTicketCommand = new RelayCommand<Train>(OnBuyTicket);
             OpenLoginWindowCommand = new RelayCommand(OpenLoginWindow);
             LoadSchedule();
             LoadMap();
@@ -90,6 +102,42 @@ namespace cp_11.ViewModel
         {
             get => stationsArrival;
             set => Set(ref stationsArrival, value);
+        }
+        public Visibility SeatTypeVisibility
+        {
+            get => _seatTypeVisibility;
+            set
+            {
+                _seatTypeVisibility = value;
+                OnPropertyChanged(nameof(SeatTypeVisibility));
+            }
+        }
+
+        public Visibility BuyButtonVisibility
+        {
+            get => _buyButtonVisibility;
+            set
+            {
+                _buyButtonVisibility = value;
+                OnPropertyChanged(nameof(BuyButtonVisibility));
+            }
+        }
+
+        private void OnBuyTicket(Train selectedTrain)
+        {
+            // Show the message
+            MessageBox.Show("Ticket bought!");
+
+            // Hide the seat type selection and the buy button
+            SeatTypeVisibility = Visibility.Collapsed;
+            BuyButtonVisibility = Visibility.Collapsed;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public string ButtonName
         {

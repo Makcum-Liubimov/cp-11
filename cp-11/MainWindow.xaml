@@ -32,33 +32,31 @@
                 <DataGridTextColumn Binding="{Binding ArrivalTime }" Header="time of arrival"/>
                     <DataGridTextColumn Binding="{Binding FinishStation}" Header="To :"/>
                 <DataGridTextColumn Binding="{Binding DepartureTime}" Header="time of departure"/>
+                <!-- New ComboBox Column for Seat Type -->
+                <DataGridTemplateColumn Header="Seat Type">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox Grid.Column="0" Grid.Row="2" Width="200" 
+                  Visibility="{Binding SeatTypeVisibility}"
+                  ItemsSource="{Binding SeatTypes}" SelectedItem="{Binding SelectedSeatType}"/>
+
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Button to Buy Ticket -->
+                <DataGridTemplateColumn Header="Actions">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Grid.Column="1" Grid.Row="2" Content="Buy Ticket" 
+                Command="{Binding BuyTicketCommand}" 
+                Visibility="{Binding BuyButtonVisibility}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-
-
-        <!-- Дата відправлення -->
-        <!--ComboBox Name="DepartureDateComboBox" Width="150" Margin="28,77,602,35"/-->
-
-        <!-- Час відправлення -->
-        <!--ComboBox Name="DepartureTimeComboBox" Margin="413,77,252,35"/-->
-
-
-        <!-- Кнопки для вибору дати -->
-        
-        <!--ListBox Name="TicketsListBox" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,250,0,0" Width="600" Height="150">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding FromCity}" Width="100"/>
-                        <TextBlock Text="{Binding ToCity}" Width="100"/>
-                        <TextBlock Text="{Binding DepartureDate}" Width="150"/>
-                        <TextBlock Text="{Binding DepartureTime}" Width="100"/>
-                        <TextBlock Text="{Binding TrainNumber}" Width="100"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox-->
         <Button Grid.Column="1" Content="{Binding ButtonName}" Command="{Binding OpenLoginWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Right"></Button>
     </Grid>
 </Window>
