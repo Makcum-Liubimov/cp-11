@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using cp_11.ViewModel.Base;
 using System.Windows;
+using cp_11.View;
 
 namespace cp_11.ViewModel
 {
@@ -22,7 +23,12 @@ namespace cp_11.ViewModel
         {
             bool result = _authentification.CheckUser(login, password);
             if (result)
+            {
+                MessageBox.Show($"Ви увійшли як {login}");
                 CurrentUser = _authentification.GetUser(login);
+                
+            }
+               
             else
                 MessageBox.Show("Неправильне ім'я користувача або пароль.");
             return result;
@@ -31,6 +37,26 @@ namespace cp_11.ViewModel
         public bool CreateUser(string login, string password, string name, string surname)
         {
             bool result = false;
+            if (string.IsNullOrWhiteSpace(login))
+            {
+                MessageBox.Show("Wrong login");
+                return result;
+            }
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Wrong password");
+                return result;
+            }
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                MessageBox.Show("Wrong name");
+                return result;
+            }
+            if (string.IsNullOrWhiteSpace(surname))
+            {
+                MessageBox.Show("Wrong surname");
+                return result;
+            }
             if (_authentification.CheckUser(login, password))
             {
                 MessageBox.Show("Користувач вже існує");
@@ -41,6 +67,7 @@ namespace cp_11.ViewModel
                 {
                     MessageBox.Show("Користувача створено");
                     CurrentUser = _authentification.GetUser(login);
+                   
                     result = true;
                 }
                 else

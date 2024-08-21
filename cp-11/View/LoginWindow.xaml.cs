@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using cp_11.ViewModel;
 using System.Xml;
+using cp_11.Logic.Auth;
 
 namespace cp_11.View
 {
@@ -32,70 +33,36 @@ namespace cp_11.View
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
 
-            if (_viewModel.CheckUser(username, password))
-            {
-                MessageBox.Show($"Ви увійшли як {username}");
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    var loginWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive);
-                    loginWindow?.Close();
-
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Show();
-                });
-            }
+            DialogResult = _viewModel.CheckUser(username, password);
+            Close();
         }
 
+        private bool IsSingIn = true;
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
-            NameLabel.Visibility = Visibility.Visible;
-            NameTextBox.Visibility = Visibility.Visible;
-            SurnameLabel.Visibility = Visibility.Visible;
-            SurnameTextBox.Visibility = Visibility.Visible;
 
+            if(IsSingIn)
+            {
+                RegestrationWindow.Height = 350;
+                NameLabel.Visibility = Visibility.Visible;
+                NameTextBox.Visibility = Visibility.Visible;
+                SurnameLabel.Visibility = Visibility.Visible;
+                SurnameTextBox.Visibility = Visibility.Visible;
+                SignInButton.Content = "Sing Up";
+                IsSingIn = false;
+                return;
+            }
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
             string name = NameTextBox.Text;
             string surname = SurnameTextBox.Text;
 
-            if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(surname))
-            {
-               // public bool CreateUser(string login, string password)
-                //{
-                   // bool result = false;
-                    //if (_authentification.CheckUser(login, password))
-                       // MessageBox.Show("Користувача існує");
-                    //else
-                    //{
-                       // if (_authentification.RegisterUser(login, password, "qwerty", "qwerty"))
-                        //{
-                           // MessageBox.Show($"Користувача {login} створено");
-
-                            // Close the current window and redirect to the LoginWindow
-                          //  Application.Current.Dispatcher.Invoke(() =>
-                            //{
-                              //  var signUpWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive);
-                                //signUpWindow?.Close();
-
-                                //LoginWindow loginWindow = new LoginWindow();
-                                //loginWindow.Show();
-                            //});
-
-                            //result = true;
-                        //}
-                        //else
-                        //{
-                          //  MessageBox.Show("Помилка створення користувача");
-                        //}
-                    //}
-
-                   //eturn result;
-                //
-            }
-            else
-            {
-                MessageBox.Show("Будь ласка, введіть ім'я та прізвище для реєстрації.");
-            }
+            
+            DialogResult = _viewModel.CreateUser(username,password,name,surname);
+            
+            Close();
         }
+
+        public User CurrentUser { get => _viewModel.CurrentUser; }
     }
 }

@@ -4,6 +4,7 @@
         xmlns:vm="clr-namespace:cp_11.ViewModel"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         Title="Логін" Height="250" Width="400"
+        x:Name="RegestrationWindow"
         >
     <Window.DataContext>
         <vm:LoginViewModel />

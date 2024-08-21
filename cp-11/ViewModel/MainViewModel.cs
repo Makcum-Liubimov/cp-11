@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using cp_11.Logic.Auth;
 using cp_11.Logic.model;
 using cp_11.View;
 using cp_11.ViewModel.Base;
@@ -18,10 +19,34 @@ namespace cp_11.ViewModel
 
         private void OpenLoginWindow(object obj)
         {
+            if(IsLogedIn)
+            {
+                IsLogedIn = false;
+                currentUser = null;
+                return;
+                
+            }
             LoginWindow loginWindow = new LoginWindow();
-            loginWindow.ShowDialog();
+            IsLogedIn = loginWindow.ShowDialog().Value;
+            CurrentUser = loginWindow.CurrentUser; 
         }
 
+        private bool isLogedIn;
+        public bool IsLogedIn 
+        {   get => isLogedIn;
+            set 
+            { 
+                if (Set(ref isLogedIn, value)) OnPropertyChanged(nameof(ButtonName));
+
+            }
+        }
+
+        private User currentUser;
+        public User CurrentUser
+        {
+            get => currentUser;
+            set => Set(ref currentUser, value);
+        }
         public MainViewModel()
         {
             OpenLoginWindowCommand = new RelayCommand(OpenLoginWindow);
@@ -66,7 +91,16 @@ namespace cp_11.ViewModel
             get => stationsArrival;
             set => Set(ref stationsArrival, value);
         }
+        public string ButtonName
+        {
+            get 
+            { 
+                if (IsLogedIn)
+                    return "log out";
+                return "log in";
+            }
 
+        }
         private bool LoadSchedule()
         {
             var files = Directory.GetFiles("Resources\\trains");

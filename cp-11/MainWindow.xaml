@@ -59,7 +59,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox-->
-        <Button Grid.Column="1" Content="Login" Command="{Binding OpenLoginWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Right"></Button>
+        <Button Grid.Column="1" Content="{Binding ButtonName}" Command="{Binding OpenLoginWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Right"></Button>
     </Grid>
 </Window>
 
