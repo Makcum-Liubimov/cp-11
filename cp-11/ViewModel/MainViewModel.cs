@@ -54,13 +54,21 @@ namespace cp_11.ViewModel
         }
 
         public ICommand BuyTicketCommand { get; }
+        private void OnBuyTicket(Train selectedTrain)
+        {
+            if (IsLogedIn)
+            {
+                SeatTypeVisibility = Visibility.Visible;
+                BuyButtonVisibility = Visibility.Visible;
+                MessageBox.Show("Ticket bought!");
+            }
+            MessageBox.Show("Login to buy ticket");
+
+        }
 
         public MainViewModel()
         {
-            // Set initial visibility to Visible
-            SeatTypeVisibility = Visibility.Visible;
-            BuyButtonVisibility = Visibility.Visible;
-            BuyTicketCommand = new RelayCommand<Train>(OnBuyTicket);
+            //BuyTicketCommand = new RelayCommand<Train>(OnBuyTicket);
             OpenLoginWindowCommand = new RelayCommand(OpenLoginWindow);
             LoadSchedule();
             LoadMap();
@@ -123,22 +131,9 @@ namespace cp_11.ViewModel
             }
         }
 
-        private void OnBuyTicket(Train selectedTrain)
-        {
-            // Show the message
-            MessageBox.Show("Ticket bought!");
+        
+        
 
-            // Hide the seat type selection and the buy button
-            SeatTypeVisibility = Visibility.Collapsed;
-            BuyButtonVisibility = Visibility.Collapsed;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         public string ButtonName
         {
             get 

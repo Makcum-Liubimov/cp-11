@@ -6,6 +6,9 @@
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -32,25 +35,14 @@
                 <DataGridTextColumn Binding="{Binding ArrivalTime }" Header="time of arrival"/>
                     <DataGridTextColumn Binding="{Binding FinishStation}" Header="To :"/>
                 <DataGridTextColumn Binding="{Binding DepartureTime}" Header="time of departure"/>
-                <!-- New ComboBox Column for Seat Type -->
-                <DataGridTemplateColumn Header="Seat Type">
+                <DataGridTemplateColumn Header="" IsReadOnly="True"
+                        Visibility="{Binding DataContext.IsLogedIn,  RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox Grid.Column="0" Grid.Row="2" Width="200" 
-                  Visibility="{Binding SeatTypeVisibility}"
-                  ItemsSource="{Binding SeatTypes}" SelectedItem="{Binding SelectedSeatType}"/>
-
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
-                <!-- Button to Buy Ticket -->
-                <DataGridTemplateColumn Header="Actions">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Grid.Column="1" Grid.Row="2" Content="Buy Ticket" 
-                Command="{Binding BuyTicketCommand}" 
-                Visibility="{Binding BuyButtonVisibility}"/>
+                            <Button Content="Buy" Width="75" Margin="5,0"
+                    Visibility="{Binding DataContext.IsLogedIn,  RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Command="{Binding DataContext.BuyCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                    CommandParameter="{Binding}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
