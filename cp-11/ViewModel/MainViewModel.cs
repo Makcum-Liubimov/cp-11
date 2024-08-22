@@ -54,12 +54,11 @@ namespace cp_11.ViewModel
         }
 
         public ICommand BuyTicketCommand { get; }
-        private void OnBuyTicket(Train selectedTrain)
+        private void BuyTicket(Train selectedTrain)
         {
             if (IsLogedIn)
             {
-                SeatTypeVisibility = Visibility.Visible;
-                BuyButtonVisibility = Visibility.Visible;
+               
                 MessageBox.Show("Ticket bought!");
             }
             MessageBox.Show("Login to buy ticket");
@@ -68,7 +67,7 @@ namespace cp_11.ViewModel
 
         public MainViewModel()
         {
-            //BuyTicketCommand = new RelayCommand<Train>(OnBuyTicket);
+            BuyTicketCommand = new RelayCommand<Train>(null, BuyTicket);
             OpenLoginWindowCommand = new RelayCommand(OpenLoginWindow);
             LoadSchedule();
             LoadMap();
