@@ -41,7 +41,7 @@
                         <DataTemplate>
                             <Button Content="Buy" Width="75" Margin="5,0"
                     Visibility="{Binding DataContext.IsLogedIn,  RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    Command="{Binding DataContext.BuyTicket, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                    Command="{Binding DataContext.BuyTicketCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                     CommandParameter="{Binding}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

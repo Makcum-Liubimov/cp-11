@@ -55,13 +55,11 @@ namespace cp_11.ViewModel
 
         public ICommand BuyTicketCommand { get; }
         private void BuyTicket(Train selectedTrain)
-        {
-            if (IsLogedIn)
-            {
+        {   
                
                 MessageBox.Show("Ticket bought!");
-            }
-            MessageBox.Show("Login to buy ticket");
+            
+            //MessageBox.Show("Login to buy ticket");
 
         }
 
