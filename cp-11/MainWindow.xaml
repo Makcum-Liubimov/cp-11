@@ -35,21 +35,42 @@
                 <DataGridTextColumn Binding="{Binding ArrivalTime }" Header="time of arrival"/>
                     <DataGridTextColumn Binding="{Binding FinishStation}" Header="To :"/>
                 <DataGridTextColumn Binding="{Binding DepartureTime}" Header="time of departure"/>
-                <DataGridTemplateColumn Header="" IsReadOnly="True"
+                <DataGridTemplateColumn Header="Cabs" IsReadOnly="True"
                         Visibility="{Binding DataContext.IsLogedIn,  RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Cabs}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Seat" IsReadOnly="True"
+                                        Visibility="{Binding DataContext.IsLogedIn,  RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Seats}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="" IsReadOnly="True"
+                                        Visibility="{Binding DataContext.IsLogedIn,  RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
                             <Button Content="Buy" Width="75" Margin="5,0"
-                    Visibility="{Binding DataContext.IsLogedIn,  RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    Command="{Binding DataContext.BuyTicketCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                    CommandParameter="{Binding}" />
+                                    Visibility="{Binding DataContext.IsLogedIn,  RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Command="{Binding DataContext.BuyTicketCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                    CommandParameter="{Binding}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Right" Grid.RowSpan="2" >
 
-        <Button Grid.Column="1" Content="{Binding ButtonName}" Command="{Binding OpenLoginWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Right"></Button>
+            <Button  Content="{Binding ButtonName}" Command="{Binding OpenLoginWindowCommand}" VerticalAlignment="Top" HorizontalAlignment="Right"></Button>
+            <Button  Content =" My Tickets" Margin="0,5" Command="{Binding OpenMyTicketsWindowCommand}" 
+                     VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="{Binding IsLogedIn, Converter={StaticResource BooleanToVisibilityConverter}}"></Button>
+
+</StackPanel>
     </Grid>
 </Window>
 

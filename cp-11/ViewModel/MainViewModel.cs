@@ -35,7 +35,15 @@ namespace cp_11.ViewModel
             IsLogedIn = loginWindow.ShowDialog().Value;
             CurrentUser = loginWindow.CurrentUser; 
         }
-
+        public RelayCommand OpenMyTicketsWindowCommand { get; }
+        private void OpenMyTicketsWindow(object obj)
+        {
+            MyTicketsViewModel myTicketsViewModel = new MyTicketsViewModel();
+            myTicketsViewModel.Tickets = currentUser.Tickets;
+            MyTicketsWindow myTicketsWindow = new MyTicketsWindow();
+            myTicketsWindow.DataContext = myTicketsViewModel;
+            myTicketsWindow.ShowDialog();
+        }
         private bool isLogedIn;
         public bool IsLogedIn 
         {   get => isLogedIn;
@@ -56,15 +64,55 @@ namespace cp_11.ViewModel
         public ICommand BuyTicketCommand { get; }
         private void BuyTicket(Train selectedTrain)
         {   
+               MyTicket = new Ticket();
+            MyTicket.TrainNumber = selectedTrain.NumberOfTrain;
+            MyTicket.Source = SelectedArrival.Name;
+            MyTicket.Destintaion = SelectedDeparture.Name;
+            MyTicket.TimeOfDeparture = SelectedDeparture.Arrival;
+            MyTicket.TimeOfArrival = SelectedArrival.Departure;
+            MyTicket.PassengerName = CurrentUser.FirstName +" " + CurrentUser.LastName;
+
+            int destinationDist = 0;
+            int arrivalDist = 0;
+            foreach (var station in selectedTrain.Stations)
+            {
+                if (station.Name == SelectedArrival.Name)
+                {
+                    if (station.Distance.Contains("-")) destinationDist = 0;
+                    else int.TryParse(station.Distance, out destinationDist);
+                    MyTicket.TimeOfDeparture = station.Departure;
+                }
+
+                if (station.Name == selectedDeparture.Name)
+                {
+                    if (station.Distance.Contains("-")) arrivalDist = 0;
+                    else int.TryParse(station.Distance, out arrivalDist);
+                    MyTicket.TimeOfArrival = station.Arrival;
+                }
+
                
-                MessageBox.Show("Ticket bought!");
+            }
+            MyTicket.Cost = 100 + (arrivalDist - destinationDist);
+
             
+            
+            Random random = new Random();
+            MyTicket.Seat = random.Next(1, 100);
+            MyTicket.Cab = random.Next(1, 10);
+            currentUser.Tickets.Add(MyTicket);
+            authentification.UpdateUser(currentUser);
+
+            //MessageBox.Show("Ticket bought!");
+
             //MessageBox.Show("Login to buy ticket");
 
         }
 
+        private Ticket MyTicket = null;
+        private Authentification authentification = new Authentification();
         public MainViewModel()
         {
+            OpenMyTicketsWindowCommand = new RelayCommand(OpenMyTicketsWindow);
             BuyTicketCommand = new RelayCommand<Train>(null, BuyTicket);
             OpenLoginWindowCommand = new RelayCommand(OpenLoginWindow);
             LoadSchedule();
@@ -151,6 +199,24 @@ namespace cp_11.ViewModel
                     var train = new Train();
                     var lines = File.ReadAllText(file);
                     train = JsonConvert.DeserializeObject<Train>(lines);
+                    int index = 0;
+                    train.Seats = new int[40];
+                    for (int i = 1; i < 40; i++)
+                    {
+                        if(new Random().Next(0,2) == 1) train.Seats[index++] = i;
+
+
+                    }
+
+                    int count = train.Seats.Select(x => x != 0).Count();
+                    //Array.Resize(ref train.Seats,count);
+                    int cabCount = new Random().Next(15, 30);
+                    train.Cabs = new int[cabCount];
+                    for (int i = 1; i < cabCount+1; i++)
+                    {
+                        train.Cabs[i-1] = i;
+                    }
+
                     Trains.Add(train);
                 }
 

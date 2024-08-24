@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using cp_11.Logic.model;
 
 namespace cp_11.Logic.Auth
 {
@@ -28,6 +29,7 @@ namespace cp_11.Logic.Auth
             try
             {
                 var item = users.First(x => x.Login == login);
+                if (item.Tickets == null) item.Tickets = new List<Ticket>();
                 return item;
             }
             catch (Exception e)
@@ -46,7 +48,7 @@ namespace cp_11.Logic.Auth
                 {
                     Login = login,
                     Hash = CreateHashString(login + "#*!" + password),
-                    //Tickets = new List<Ticket>(),
+                    Tickets = new List<Ticket>(),
                     LastName = lastName,
                     FirstName = firstName
                 };
@@ -99,7 +101,7 @@ namespace cp_11.Logic.Auth
             var user = GetUser(currenUser.Login);
             if (user != null)
             {
-                //user.Tickets = new List<Ticket>(currenUser.Tickets);
+                user.Tickets = new List<Ticket>(currenUser.Tickets);
                 SaveUsers();
                 return true;
             }

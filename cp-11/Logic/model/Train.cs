@@ -1,6 +1,7 @@
 ﻿using cp_11.ViewModel.Base;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace cp_11.Logic.model
         public string NumberOfTrain { get; set; }
         public string ArrivalTime { get; set; }
         public string DepartureTime { get; set; }
+        public int[] Seats {get;set;}
+        public int[] Cabs { get; set; }
 
         // Seat Types
         public List<string> SeatTypes { get; set; } = new List<string> { "Platzkart", "Kupe", "Esve" };
@@ -27,6 +30,7 @@ namespace cp_11.Logic.model
             {
                 Set(ref _selectedSeatType, value);
                 OnPropertyChanged(nameof(IsSeatTypeSelected));
+
             }
         }
 
