@@ -64,7 +64,7 @@ namespace cp_11.ViewModel
         public ICommand BuyTicketCommand { get; }
         private void BuyTicket(Train selectedTrain)
         {   
-               MyTicket = new Ticket();
+            MyTicket = new Ticket();
             MyTicket.TrainNumber = selectedTrain.NumberOfTrain;
             MyTicket.Source = SelectedArrival.Name;
             MyTicket.Destintaion = SelectedDeparture.Name;
@@ -97,14 +97,10 @@ namespace cp_11.ViewModel
             
             
             Random random = new Random();
-            MyTicket.Seat = random.Next(1, 100);
-            MyTicket.Cab = random.Next(1, 10);
+            MyTicket.Seat = random.Next(1, 100).ToString();
+            //MyTicket.Cab = selectedTrain.Cabs[].number;
             currentUser.Tickets.Add(MyTicket);
             authentification.UpdateUser(currentUser);
-
-            //MessageBox.Show("Ticket bought!");
-
-            //MessageBox.Show("Login to buy ticket");
 
         }
 
@@ -199,22 +195,64 @@ namespace cp_11.ViewModel
                     var train = new Train();
                     var lines = File.ReadAllText(file);
                     train = JsonConvert.DeserializeObject<Train>(lines);
-                    int index = 0;
-                    train.Seats = new int[40];
-                    for (int i = 1; i < 40; i++)
+                    int seatCount = new Random().Next(1,40);
+                    train.Seats = new string[seatCount];
+                    for (int i = 1; i < seatCount-1; i++)
                     {
-                        if(new Random().Next(0,2) == 1) train.Seats[index++] = i;
-
+                        train.Seats[i] = new Random().Next(1, 40).ToString();
 
                     }
+                    for (int i = 0; i < seatCount; i++)
+                    {
+                        for (int j = i + 1; j < seatCount; j++)
+                        {
+                            if (train.Seats[i] == train.Seats[j])
+                            {
+                                train.Seats[j] += "B";
+                            }
+                        }
+                    }
 
-                    int count = train.Seats.Select(x => x != 0).Count();
-                    //Array.Resize(ref train.Seats,count);
+
                     int cabCount = new Random().Next(15, 30);
-                    train.Cabs = new int[cabCount];
+                    train.Cabs = new Cab[cabCount];
                     for (int i = 1; i < cabCount+1; i++)
                     {
-                        train.Cabs[i-1] = i;
+                        int cabRandomizer = new Random().Next(0, 9);
+                        switch(cabRandomizer)
+                        {
+                            case 0:
+                                train.Cabs[i - 1] = new Sleeping(i,false);
+                                break;
+                            case 1:
+                                train.Cabs[i - 1] = new Coupe(i, false);
+                                break;
+                            case 2:
+                                train.Cabs[i - 1] = new FirstClass(i, false);
+                                break;
+                            case 3:
+                                train.Cabs[i - 1] = new SecondClass(i, false);
+                                break;
+                            case 4:
+                                train.Cabs[i - 1] = new Platskart(i, false);
+                                break;
+                            case 5:
+                                train.Cabs[i - 1] = new Sleeping(i, true);
+                                break;
+                            case 6:
+                                train.Cabs[i - 1] = new Coupe(i, true);
+                                break;
+                            case 7:
+                                train.Cabs[i - 1] = new FirstClass(i,true);
+                                break;
+                            case 8:
+                                train.Cabs[i - 1] = new SecondClass(i,true);
+                                break;
+                            case 9:
+                                train.Cabs[i - 1] = new Platskart(i, true);
+                                break;
+
+                        }
                     }
 
                     Trains.Add(train);

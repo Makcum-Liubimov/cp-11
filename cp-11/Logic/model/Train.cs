@@ -16,8 +16,8 @@ namespace cp_11.Logic.model
         public string NumberOfTrain { get; set; }
         public string ArrivalTime { get; set; }
         public string DepartureTime { get; set; }
-        public int[] Seats {get;set;}
-        public int[] Cabs { get; set; }
+        public string[] Seats {get;set;}
+        public Cab[] Cabs { get; set; }
 
         // Seat Types
         public List<string> SeatTypes { get; set; } = new List<string> { "Platzkart", "Kupe", "Esve" };
