@@ -92,13 +92,13 @@ namespace cp_11.ViewModel
 
                
             }
-            MyTicket.Cost = 100 + (arrivalDist - destinationDist);
+            MyTicket.Cost = 100 + (arrivalDist - destinationDist) + selectedTrain.SelectedCab.CostIncrease();
 
 
 
 
             MyTicket.Seat = selectedTrain.SelectedSeat;
-            MyTicket.Cab = selectedTrain.SelectedCab.Number;
+            MyTicket.Cab = selectedTrain.SelectedCab.CabName;
             currentUser.Tickets.Add(MyTicket);
             authentification.UpdateUser(currentUser);
 
@@ -195,23 +195,22 @@ namespace cp_11.ViewModel
                     var train = new Train();
                     var lines = File.ReadAllText(file);
                     train = JsonConvert.DeserializeObject<Train>(lines);
-                    int seatCount = new Random().Next(1,40);
-                    train.Seats = new string[seatCount];
-                    for (int i = 1; i < seatCount-1; i++)
-                    {
-                        train.Seats[i] = new Random().Next(1, 40).ToString();
 
-                    }
+                    int seatCount = new Random().Next(1,40);
+                    HashSet<int> seatSet = new HashSet<int>();
+                    train.Seats = new int[seatCount];
                     for (int i = 0; i < seatCount; i++)
                     {
-                        for (int j = i + 1; j < seatCount; j++)
+                        int newSeatNum;
+                        do
                         {
-                            if (train.Seats[i] == train.Seats[j])
-                            {
-                                train.Seats[j] += "B";
-                            }
-                        }
+                            newSeatNum = new Random().Next(1, 101);
+                        } while (seatSet.Contains(newSeatNum));
+                        train.Seats[i] = newSeatNum;
+                        seatSet.Add(newSeatNum);
+
                     }
+                    Array.Sort(train.Seats);
 
 
                     int cabCount = new Random().Next(15, 30);

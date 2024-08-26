@@ -9,8 +9,8 @@ namespace cp_11.Logic.model
     public class Ticket
     {
         public double Cost { get; set; }
-        public string Seat { get; set; }
-        public int Cab { get; set; }
+        public int Seat { get; set; }
+        public string Cab { get; set; }
         public string PassengerName { get; set; }
         public string TrainNumber { get; set; }
         public string Destintaion { get; set; }

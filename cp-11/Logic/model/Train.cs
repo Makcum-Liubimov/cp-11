@@ -16,12 +16,12 @@ namespace cp_11.Logic.model
         public string NumberOfTrain { get; set; }
         public string ArrivalTime { get; set; }
         public string DepartureTime { get; set; }
-        public string[] Seats {get;set;}
+        public int[] Seats {get;set;}
         public Cab[] Cabs { get; set; }
 
-        private string _selectedSeat;
+        private int _selectedSeat;
 
-        public string SelectedSeat
+        public int SelectedSeat
         {
             get => _selectedSeat;
             set

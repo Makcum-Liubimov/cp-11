@@ -39,7 +39,7 @@
                         Visibility="{Binding DataContext.IsLogedIn,  RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding Cabs}" DisplayMemberPath="Number" SelectedItem="{Binding SelectedCab,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <ComboBox ItemsSource="{Binding Cabs}" DisplayMemberPath="CabName" SelectedItem="{Binding SelectedCab,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

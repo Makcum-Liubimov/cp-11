@@ -11,6 +11,8 @@ namespace cp_11.Logic.model
         public int Number { get; set; }
         public bool forWomen { get; set; }
         abstract public int CostIncrease();
+        abstract public string CabName { get;  }
+        
     }
 
     enum CabType
@@ -20,25 +22,33 @@ namespace cp_11.Logic.model
         firstClass = 2,
         secondClass = 3,
         platskart = 4,
-        sleepingW = 5,
-        coupeW = 6,
-        firstClassW = 7,
-        secondClassW = 8,
-        platskartW = 9
+        sleepingForWomen = 5,
+        coupeForWomen = 6,
+        firstClassForWomen = 7,
+        secondClassForWomen = 8,
+        platskartForWomen = 9
     };
 
     public class Sleeping : Cab
     {
         
-        CabType type = CabType.sleeping;
+        CabType type;
+        public override string  CabName
+        {
+            get => Number.ToString() + " " + type.ToString();
+        }
         public override int CostIncrease()
         {
             return 500;
         }
+       
         public Sleeping(int num, bool isW)
         {
             Number = num;
             forWomen = isW;
+            if (isW) type = CabType.sleepingForWomen;
+            else type = CabType.sleeping;
+
         }
         public Sleeping()
         {
@@ -56,10 +66,16 @@ namespace cp_11.Logic.model
         {
             return 350;
         }
+        public override string CabName
+        {
+            get => Number.ToString() + " " + type.ToString();
+        }
         public Coupe(int num, bool isW)
         {
             Number = num;
             forWomen = isW;
+            if (isW) type = CabType.coupeForWomen;
+            else type = CabType.coupe;
         }
         public Coupe()
         {
@@ -76,10 +92,16 @@ namespace cp_11.Logic.model
         {
             return 750;
         }
+        public override string CabName
+        {
+            get => Number.ToString() + " " + type.ToString();
+        }
         public FirstClass(int num, bool isW)
         {
             Number = num;
             forWomen = isW;
+            if (isW) type = CabType.firstClassForWomen;
+            else type = CabType.firstClass;
         }
         public FirstClass()
         {
@@ -96,10 +118,16 @@ namespace cp_11.Logic.model
         {
             return 375;
         }
+        public override string CabName
+        {
+            get => Number.ToString() + " " + type.ToString();
+        }
         public SecondClass(int num, bool isW)
         {
             Number = num;
             forWomen = isW;
+            if (isW) type = CabType.secondClassForWomen;
+            else type = CabType.secondClass;
         }
         public SecondClass()
         {
@@ -116,10 +144,16 @@ namespace cp_11.Logic.model
         {
             return 100;
         }
+        public override string CabName
+        {
+            get => Number.ToString() + " " + type.ToString();
+        }
         public Platskart(int num, bool isW)
         {
             Number = num;
             forWomen = isW;
+            if (isW) type = CabType.platskartForWomen;
+            else type = CabType.platskart;
         }
         public Platskart()
         {
