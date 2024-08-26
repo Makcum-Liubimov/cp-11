@@ -94,11 +94,11 @@ namespace cp_11.ViewModel
             }
             MyTicket.Cost = 100 + (arrivalDist - destinationDist);
 
-            
-            
-            Random random = new Random();
-            MyTicket.Seat = random.Next(1, 100).ToString();
-            //MyTicket.Cab = selectedTrain.Cabs[].number;
+
+
+
+            MyTicket.Seat = selectedTrain.SelectedSeat;
+            MyTicket.Cab = selectedTrain.SelectedCab.Number;
             currentUser.Tickets.Add(MyTicket);
             authentification.UpdateUser(currentUser);
 

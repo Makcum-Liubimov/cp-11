@@ -8,6 +8,8 @@ namespace cp_11.Logic.model
 {
     public abstract class Cab
     {
+        public int Number { get; set; }
+        public bool forWomen { get; set; }
         abstract public int CostIncrease();
     }
 
@@ -27,8 +29,7 @@ namespace cp_11.Logic.model
 
     public class Sleeping : Cab
     {
-        int Number { get; set; }
-        bool forWomen { get; set; }
+        
         CabType type = CabType.sleeping;
         public override int CostIncrease()
         {
@@ -49,8 +50,7 @@ namespace cp_11.Logic.model
 
     public class Coupe : Cab
     {
-        int Number { get; set; }
-        bool forWomen { get; set; }
+        
         CabType type = CabType.coupe;
         public override int CostIncrease()
         {
@@ -70,8 +70,7 @@ namespace cp_11.Logic.model
 
     public class FirstClass : Cab
     {
-        int Number { get; set; }
-        bool forWomen { get; set; }
+     
         CabType type = CabType.firstClass;
         public override int CostIncrease()
         {
@@ -91,8 +90,7 @@ namespace cp_11.Logic.model
 
     public class SecondClass : Cab
     {
-        int Number { get; set; }
-        bool forWomen { get; set; }
+       
         CabType type = CabType.secondClass;
         public override int CostIncrease()
         {
@@ -112,8 +110,7 @@ namespace cp_11.Logic.model
 
     public class Platskart : Cab
     {
-        int Number { get; set; }
-        bool forWomen { get; set; }
+       
         CabType type = CabType.platskart;
         public override int CostIncrease()
         {

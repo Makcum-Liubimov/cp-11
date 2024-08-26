@@ -19,6 +19,18 @@ namespace cp_11.Logic.model
         public string[] Seats {get;set;}
         public Cab[] Cabs { get; set; }
 
+        private string _selectedSeat;
+
+        public string SelectedSeat
+        {
+            get => _selectedSeat;
+            set
+            {
+                Set(ref _selectedSeat, value);
+            }
+        }
+        public Cab SelectedCab { get; set; }
+
         // Seat Types
         public List<string> SeatTypes { get; set; } = new List<string> { "Platzkart", "Kupe", "Esve" };
 
@@ -29,7 +41,6 @@ namespace cp_11.Logic.model
             set
             {
                 Set(ref _selectedSeatType, value);
-                OnPropertyChanged(nameof(IsSeatTypeSelected));
 
             }
         }

@@ -28,7 +28,7 @@
         <ComboBox Grid.Column="1" Grid.Row="1" Name="ToCityComboBox" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10" Width="300"
                   ItemsSource="{Binding StationsDeparture}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedDeparture}"/>
             
-        <DataGrid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding SelectedTrains}" AutoGenerateColumns="False">
+        <DataGrid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding SelectedTrains}" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding NumberOfTrain}" Header="train #"/>
                 <DataGridTextColumn Binding="{Binding StartStation}" Header="From :"/>
@@ -39,7 +39,7 @@
                         Visibility="{Binding DataContext.IsLogedIn,  RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding Cabs}"/>
+                            <ComboBox ItemsSource="{Binding Cabs}" DisplayMemberPath="Number" SelectedItem="{Binding SelectedCab,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -47,7 +47,7 @@
                                         Visibility="{Binding DataContext.IsLogedIn,  RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding Seats}"/>
+                            <ComboBox ItemsSource="{Binding Seats}" SelectedItem="{Binding SelectedSeat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
