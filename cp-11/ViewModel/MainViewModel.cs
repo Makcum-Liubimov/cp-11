@@ -196,20 +196,12 @@ namespace cp_11.ViewModel
                     var lines = File.ReadAllText(file);
                     train = JsonConvert.DeserializeObject<Train>(lines);
 
-                    int seatCount = new Random().Next(1,40);
-                    HashSet<int> seatSet = new HashSet<int>();
+                    Random random = new Random();
+                    int seatCount = random.Next(1, 40);
                     train.Seats = new int[seatCount];
-                    for (int i = 0; i < seatCount; i++)
-                    {
-                        int newSeatNum;
-                        do
-                        {
-                            newSeatNum = new Random().Next(1, 101);
-                        } while (seatSet.Contains(newSeatNum));
-                        train.Seats[i] = newSeatNum;
-                        seatSet.Add(newSeatNum);
-
-                    }
+                    List<int> seatRandomizer = Enumerable.Range(0,40).ToList();
+                    seatRandomizer = seatRandomizer.OrderBy(x => random.Next()).ToList();
+                    train.Seats = seatRandomizer.Take(seatCount).ToArray();
                     Array.Sort(train.Seats);
 
 

@@ -14,8 +14,8 @@ namespace cp_11.Logic.model
         abstract public string CabName { get;  }
         
     }
-
-    enum CabType
+   
+   public   enum CabType
     {
         sleeping = 0,
         coupe = 1,
