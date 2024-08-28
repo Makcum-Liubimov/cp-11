@@ -8,12 +8,18 @@ using cp_11.Logic.model;
 
 namespace cp_11.Logic.Auth
 {
-    public class User
+    public class User : model.IEquatable<User>
     {
         public List<Ticket> Tickets { get; set; }
         public string FirstName { get; set; }
         public string Hash { get; set; }
         public string LastName { get; set; }
         public string Login { get; set; }
+
+        public bool IsTicketBought(User NewUser)
+        {
+            if(FirstName == NewUser.FirstName && LastName == NewUser.LastName) return true;
+            return false;
+        }
     }
 }

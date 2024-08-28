@@ -99,6 +99,14 @@ namespace cp_11.ViewModel
 
             MyTicket.Seat = selectedTrain.SelectedSeat;
             MyTicket.Cab = selectedTrain.SelectedCab.CabName;
+            foreach (var ticket in currentUser.Tickets)
+            {
+                if (ticket == MyTicket)
+                {
+                    Console.WriteLine("Error, ticket alredy bought");
+                    break;
+                }
+            }
             currentUser.Tickets.Add(MyTicket);
             authentification.UpdateUser(currentUser);
 

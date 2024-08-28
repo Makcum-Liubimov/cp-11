@@ -7,7 +7,7 @@ using cp_11.Logic.model;
 
 namespace cp_11.Logic.model
 {
-    public class Ticket
+    public class Ticket : IEquatable<Ticket>
     {
         public double Cost { get; set; }
         public int Seat { get; set; }
@@ -19,58 +19,16 @@ namespace cp_11.Logic.model
         public string TimeOfArrival { get; set; }
         public string TimeOfDeparture { get; set; }
 
-       
+        public bool IsTicketBought(Ticket newTicket)
+        {
+            if (Seat == newTicket.Seat && Cab == newTicket.Cab)
+            { return true; }
+            return false;
+        }
     }
     
-    public interface ITicket
+   public interface IEquatable<T>
     {
-        CabType Type { get; set; }
-        void changeTicket(CabType Newtype);
-        
-    }
-
-    public class FirstClassTicket : Ticket, ITicket
-    {
-        public CabType Type { get; set; }
-        public void changeTicket(CabType Newtype)
-        {
-            Type = Newtype;
-        }
-    }
-
-    public class SecondClassTicket : Ticket, ITicket
-    {
-        public CabType Type { get; set; }
-        public void changeTicket(CabType Newtype)
-        {
-            Type = Newtype;
-        }
-    }
-
-    public class SleepinCabTicket : Ticket, ITicket
-    {
-        public CabType Type { get; set; }
-        public void changeTicket(CabType Newtype)
-        {
-            Type = Newtype;
-        }
-    }
-
-    public class CoupeTicket : Ticket, ITicket
-    {
-        public CabType Type { get; set; }
-        public void changeTicket(CabType Newtype)
-        {
-            Type = Newtype;
-        }
-    }
-
-    public class PlatzkartTicket : Ticket, ITicket
-    {
-        public CabType Type { get; set; }
-        public void changeTicket(CabType Newtype)
-        {
-            Type = Newtype;
-        }
+        bool IsTicketBought(T newTicket);
     }
 }
