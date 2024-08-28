@@ -199,7 +199,7 @@ namespace cp_11.ViewModel
                     Random random = new Random();
                     int seatCount = random.Next(1, 40);
                     train.Seats = new int[seatCount];
-                    List<int> seatRandomizer = Enumerable.Range(0,40).ToList();
+                    List<int> seatRandomizer = Enumerable.Range(1,40).ToList();
                     seatRandomizer = seatRandomizer.OrderBy(x => random.Next()).ToList();
                     train.Seats = seatRandomizer.Take(seatCount).ToArray();
                     Array.Sort(train.Seats);
