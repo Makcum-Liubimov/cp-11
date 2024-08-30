@@ -7,8 +7,9 @@ using cp_11.Logic.model;
 
 namespace cp_11.Logic.model
 {
-    public class Ticket : IEquatable<Ticket>
+    public class Ticket : ITicket, IEquatable<Ticket>
     {
+
         public double Cost { get; set; }
         public int Seat { get; set; }
         public string Cab { get; set; }
@@ -19,16 +20,27 @@ namespace cp_11.Logic.model
         public string TimeOfArrival { get; set; }
         public string TimeOfDeparture { get; set; }
 
-        public bool IsTicketBought(Ticket newTicket)
+        public bool Equals(Ticket? other)
         {
-            if (Seat == newTicket.Seat && Cab == newTicket.Cab)
-            { return true; }
+            if(PassengerName == other.PassengerName && Seat == other.Seat) return true;
             return false;
         }
     }
     
-   public interface IEquatable<T>
+
+    interface ITicket
     {
-        bool IsTicketBought(T newTicket);
+        public double Cost { get; set; }
+        public int Seat { get; set; }
+        public string Cab { get; set; }
+        public string PassengerName { get; set; }
+        public string TrainNumber { get; set; }
+        public string Destintaion { get; set; }
+        public string Source { get; set; }
+        public string TimeOfArrival { get; set; }
+        public string TimeOfDeparture { get; set; }
     }
+
 }
+   
+
