@@ -30,10 +30,11 @@ namespace cp_11.View
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            string username = UsernameTextBox.Text;
-            string password = PasswordBox.Password;
+            User user = new User();
+            user.Login = UsernameTextBox.Text;
+            user.Hash = PasswordBox.Password;
 
-            DialogResult = _viewModel.CheckUser(username, password);
+            DialogResult = CurrentUser.Equals(user); //_viewModel.CheckUser(username, password);
             Close();
         }
 

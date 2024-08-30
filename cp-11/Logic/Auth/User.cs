@@ -22,4 +22,15 @@ namespace cp_11.Logic.Auth
             return false;
         }
     }
+
+    public class Admin : User, IEquatable<Admin>
+    {
+        public bool IsAdmin = true;
+
+        public bool Equals(Admin? other)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }
