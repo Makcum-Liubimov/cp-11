@@ -101,9 +101,11 @@ namespace cp_11.ViewModel
             MyTicket.Cab = selectedTrain.SelectedCab.CabName;
             foreach (var ticket in currentUser.Tickets)
             {
-                if (ticket == MyTicket)
+                if (ticket.Equals(MyTicket))
                 {
-                    Console.WriteLine("Error, ticket alredy bought");
+                    
+                    MessageBox.Show("Error, ticket alredy bought");
+                   
                     break;
                 }
             }
@@ -205,7 +207,7 @@ namespace cp_11.ViewModel
                     train = JsonConvert.DeserializeObject<Train>(lines);
 
                     Random random = new Random();
-                    int seatCount = random.Next(1, 40);
+                    int seatCount = random.Next(1, 41);
                     train.Seats = new int[seatCount];
                     List<int> seatRandomizer = Enumerable.Range(1,40).ToList();
                     seatRandomizer = seatRandomizer.OrderBy(x => random.Next()).ToList();
@@ -213,11 +215,11 @@ namespace cp_11.ViewModel
                     Array.Sort(train.Seats);
 
 
-                    int cabCount = new Random().Next(15, 30);
+                    int cabCount = new Random().Next(15, 31);
                     train.Cabs = new Cab[cabCount];
                     for (int i = 1; i < cabCount+1; i++)
                     {
-                        int cabRandomizer = new Random().Next(0, 9);
+                        int cabRandomizer = new Random().Next(0, 10);
                         switch(cabRandomizer)
                         {
                             case 0:

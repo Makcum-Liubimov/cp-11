@@ -17,6 +17,7 @@ namespace cp_11.Logic.Auth
 
         public bool CheckUser(string login, string password)
         {
+
             var user = GetUser(login);
             if (user != null)
                 return user.Hash == CreateHashString(login + "#*!" + password);
@@ -41,6 +42,7 @@ namespace cp_11.Logic.Auth
 
         public bool RegisterUser(string login, string password, string firstName, string lastName)
         {
+            //equal
             var finduser = GetUser(login);
             if (finduser == null)
             {

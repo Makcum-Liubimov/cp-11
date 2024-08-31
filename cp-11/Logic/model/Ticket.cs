@@ -22,7 +22,8 @@ namespace cp_11.Logic.model
 
         public bool Equals(Ticket? other)
         {
-            if(PassengerName == other.PassengerName && Seat == other.Seat) return true;
+            
+            if(PassengerName == other.PassengerName && Seat == other.Seat && TrainNumber == other.TrainNumber) return true;
             return false;
         }
     }
