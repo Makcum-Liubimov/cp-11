@@ -39,22 +39,22 @@ namespace cp_11.ViewModel
             bool result = false;
             if (string.IsNullOrWhiteSpace(login))
             {
-                MessageBox.Show("Wrong login");
+                MessageBox.Show("хибне імя ");
                 return result;
             }
             if (string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Wrong password");
+                MessageBox.Show("Хибний пароль");
                 return result;
             }
             if (string.IsNullOrWhiteSpace(name))
             {
-                MessageBox.Show("Wrong name");
+                MessageBox.Show("Хиьне імя");
                 return result;
             }
             if (string.IsNullOrWhiteSpace(surname))
             {
-                MessageBox.Show("Wrong surname");
+                MessageBox.Show("Хибна Фамілія");
                 return result;
             }
             User SomeUser = new User();
