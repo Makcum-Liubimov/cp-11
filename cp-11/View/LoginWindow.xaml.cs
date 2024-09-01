@@ -34,7 +34,7 @@ namespace cp_11.View
             user.Login = UsernameTextBox.Text;
             user.Hash = PasswordBox.Password;
 
-            DialogResult = CurrentUser.Equals(user); //_viewModel.CheckUser(username, password);
+            DialogResult = _viewModel.CheckUser(UsernameTextBox.Text, PasswordBox.Password);
             Close();
         }
 

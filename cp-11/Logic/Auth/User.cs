@@ -18,18 +18,18 @@ namespace cp_11.Logic.Auth
 
         public bool Equals(User? other)
         {
-            if(FirstName == other.FirstName && LastName == other.LastName && Login == other.Login && Hash == other.Hash)  return true; // add login
+            if(FirstName == other.FirstName && LastName == other.LastName && Login == other.Login && Hash == other.Hash)  return true;
             return false;
         }
     }
 
-    public interface IUser
+     interface IUser
     {
-        public List<Ticket> Tickets { get; set; }
-        public string FirstName { get; set; }
-        public string Hash { get; set; }
-        public string LastName { get; set; }
-        public string Login { get; set; }
+         List<Ticket> Tickets { get; set; }
+         string FirstName { get; set; }
+         string Hash { get; set; }
+        string LastName { get; set; }
+        string Login { get; set; }
     }
 
     public class Admin : User, IEquatable<Admin>

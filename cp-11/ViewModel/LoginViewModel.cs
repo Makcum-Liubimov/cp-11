@@ -21,7 +21,7 @@ namespace cp_11.ViewModel
 
         public bool CheckUser(string login, string password)
         {
-            bool result = _authentification.CheckUser(login, password);
+            bool result = _authentification.CheckUser(login,password);
             if (result)
             {
                 MessageBox.Show($"Ви увійшли як {login}");
@@ -57,22 +57,27 @@ namespace cp_11.ViewModel
                 MessageBox.Show("Wrong surname");
                 return result;
             }
-            if (_authentification.CheckUser(login, password))
+            User SomeUser = new User();
+            SomeUser.Login = login;
+            SomeUser.FirstName = name;
+            SomeUser.LastName = surname;
+            SomeUser.Hash = password;
+            if (_authentification.CheckUser(SomeUser))
             {
                 MessageBox.Show("Користувач вже існує");
             }
             else
             {
-                if (_authentification.RegisterUser(login, password, name, surname))
+                if (_authentification.RegisterUser(SomeUser))
                 {
                     MessageBox.Show("Користувача створено");
-                    CurrentUser = _authentification.GetUser(login);
+                    CurrentUser = _authentification.GetUser(SomeUser);
                    
                     result = true;
                 }
                 else
                 {
-                    MessageBox.Show("Помилка створення користувача");
+                    MessageBox.Show("Користувач вже існує");
                 }
             }
 

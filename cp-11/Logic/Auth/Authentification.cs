@@ -15,6 +15,15 @@ namespace cp_11.Logic.Auth
     {
         private List<User> users = new();
 
+        public bool CheckUser(User someUser)
+        {
+
+            var user = GetUser(someUser);
+            if (user != null)
+                return user.Hash == CreateHashString(someUser.Login + "#*!" + someUser.Hash);
+            return false;
+        }
+
         public bool CheckUser(string login, string password)
         {
 
@@ -24,13 +33,12 @@ namespace cp_11.Logic.Auth
             return false;
         }
 
-        public User GetUser(string login)
+        public User GetUser(string someLogin)
         {
             LoadUser();
             try
             {
-                var item = users.First(x => x.Login == login);
-                if (item.Tickets == null) item.Tickets = new List<Ticket>();
+                var item = users.First(x => x.Login == someLogin);
                 return item;
             }
             catch (Exception e)
@@ -39,20 +47,28 @@ namespace cp_11.Logic.Auth
 
             return null;
         }
-
-        public bool RegisterUser(string login, string password, string firstName, string lastName)
+        public User GetUser(User someUser)
+        {
+            LoadUser();
+            foreach (var user in users)
+            {
+                if(user.Equals(someUser)) return user;
+            }
+            return null;
+        }
+        public bool RegisterUser(User someUser)
         {
             //equal
-            var finduser = GetUser(login);
+            var finduser = GetUser(someUser);
             if (finduser == null)
             {
                 var user = new User
                 {
-                    Login = login,
-                    Hash = CreateHashString(login + "#*!" + password),
+                    Login = someUser.Login,
+                    Hash = CreateHashString(someUser.Login + "#*!" + someUser.Hash),
                     Tickets = new List<Ticket>(),
-                    LastName = lastName,
-                    FirstName = firstName
+                    LastName = someUser.LastName,
+                    FirstName = someUser.FirstName
                 };
                 return AddUser(user);
             }
@@ -100,7 +116,7 @@ namespace cp_11.Logic.Auth
         }
         public bool UpdateUser(User currenUser)
         {
-            var user = GetUser(currenUser.Login);
+            var user = GetUser(currenUser);
             if (user != null)
             {
                 user.Tickets = new List<Ticket>(currenUser.Tickets);
